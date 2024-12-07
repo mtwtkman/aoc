@@ -1,0 +1,42 @@
+#!/bin/sh
+
+day="${1}"
+url="https://adventofcode.com/2024/day/${2}"
+mkdir "./${day}"
+cd "./${day}"
+cabal init -mn -p aoc
+echo "${url}" > README.md
+cat <<EOF > app/Main.hs
+module Main where
+
+import Data.Functor ((<&>))
+import System.Environment (getArgs)
+
+splitBy :: Char -> String -> [String]
+splitBy d = go ""
+ where
+  go :: String -> String -> [String]
+  go acc [x] = if x == d then [acc] else [acc <> [x]]
+  go acc (x : xs) = if x == d then [acc] <> go "" xs else go (acc <> [x]) xs
+  go _ "" = []
+
+getFilePath :: IO FilePath
+getFilePath = getArgs <&> head
+
+type Source = undefined
+type Answer = undefined
+
+readInput :: FilePath -> IO Source
+readInput f = do
+  content <- readFile f
+  undefined
+
+solve :: Source -> Answer
+solve source = undefined
+
+main :: IO ()
+main = getFilePath >>= readInput >>= print . solve
+EOF
+
+source ~/.bash_profile
+vim "./${day}"
