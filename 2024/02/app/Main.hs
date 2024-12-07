@@ -36,10 +36,24 @@ solve source = sum $ map (calc . tplToList) source
   calc xs = go (compare (head xs) (xs !! 1)) xs
 
   go :: Ordering -> [Int] -> Answer
-  go _ [] = 1
-  go _ [_] = 1
+  go _ [] = error "redundant"
+  go _ [_] = error "redundant"
   go o [a, b] = if compare a b == o && rule2 a b then 1 else 0
   go o (a : b : rest) = if compare a b == o && rule2 a b then go o (b : rest) else 0
 
+makePairs :: (Int, Int, Int, Int, Int) -> [(Int, Int)]
+makePairs (a, b, c, d, e) = [(a, b), (b, c), (c, d), (d, e)]
+
+solve2 :: Source -> Answer
+solve2 source = sum (map (calc True . makePairs) source)
+ where
+  calc :: Bool -> [(Int, Int)] -> Answer
+  calc a xs = if go a xs (uncurry compare (head xs)) then 1 else 0
+
+  go :: Bool -> [(Int, Int)] -> Ordering -> Bool
+  go False _ _ = False
+  go True [] _ = True
+  go True ((x, y) : xs) o = (compare x y == o && rule2 x y) && go True xs o
+
 main :: IO ()
-main = getFilePath >>= readInput >>= print . solve
+main = getFilePath >>= readInput >>= print . solve2
