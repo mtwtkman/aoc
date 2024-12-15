@@ -5,7 +5,7 @@ import Data.List (sort)
 import System.Environment (getArgs)
 
 splitBy :: Char -> String -> [String]
-splitBy d = go ""
+splitBy d s = [x | x <- go "" s, not (null x)]
  where
   go :: String -> String -> [String]
   go acc [x] = if x == d then [acc] else [acc <> [x]]

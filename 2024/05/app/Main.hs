@@ -1,13 +1,3 @@
-#!/bin/sh
-
-day="${1}"
-num=$(echo ${day} | rg -e '(0*)([1-9]+)' -r '$2')
-url="https://adventofcode.com/2024/day/${num}"
-mkdir "./${day}"
-cd "./${day}"
-cabal init -mn -p aoc
-echo "${url}" > README.md
-cat <<EOF > app/Main.hs
 module Main where
 
 import Data.Functor ((<&>))
@@ -24,8 +14,14 @@ splitBy d = go ""
 getFilePath :: IO FilePath
 getFilePath = getArgs <&> head
 
-type Source = undefined
-type Answer = undefined
+type SourceOrderRule = [(Int, Int)]
+type SourceUpdate = [[Int]]
+
+data Source = Source {
+  orderRule :: SourceOrderRule,
+  update :: SourceUpdate
+  }
+type Answer = Int
 
 readInput :: FilePath -> IO Source
 readInput f = do
@@ -37,7 +33,3 @@ solve source = undefined
 
 main :: IO ()
 main = getFilePath >>= readInput >>= print . solve
-EOF
-
-source ~/.bash_profile
-vim "./${day}"
