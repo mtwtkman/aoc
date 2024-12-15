@@ -57,13 +57,13 @@ type Row = Int
 type Col = Int
 
 canMoveToDown :: Row -> Y -> Bool
-canMoveToDown r y = r - y >= 4
+canMoveToDown r y = r - y >= 3
 
 canMoveToUp :: Y -> Bool
 canMoveToUp y = y >= 3
 
 canMoveToRight :: Col -> X -> Bool
-canMoveToRight c x = c - x >= 4
+canMoveToRight c x = c - x >= 3
 
 canMoveToLeft :: X -> Bool
 canMoveToLeft x = x >= 3
