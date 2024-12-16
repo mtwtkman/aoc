@@ -13,6 +13,6 @@ common warnings
 executable aoc
     import:           warnings
     main-is:          Main.hs
-    build-depends:    base ^>=4.17.2.1
+    build-depends:    base ^>=4.17.2.1, containers
     hs-source-dirs:   app
     default-language: Haskell2010
